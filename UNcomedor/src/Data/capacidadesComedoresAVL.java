@@ -6,7 +6,6 @@ public class capacidadesComedoresAVL {
 // Create node
 
     class Node {
-
         String nombreComedor;
         int item, height;
         Node left, right;
@@ -164,6 +163,22 @@ public class capacidadesComedoresAVL {
         }
         return root;
     }
+    
+    // Search a node
+    Node searchNode(Node root, int item) {
+        // Find the node 
+        if (root == null) {
+            return root;
+        }
+        if (item < root.item) {
+            return searchNode(root.left, item);
+        } else if (item > root.item) {
+            return searchNode(root.right, item);
+        } else {
+            return root;      
+        }
+    }
+    
 
     void preOrder(Node node) {
         if (node != null) {
@@ -203,23 +218,41 @@ public class capacidadesComedoresAVL {
     }
 
     public static void main(String[] args) {
-        capacidadesComedoresAVL tree = new capacidadesComedoresAVL();
-        generadorNodos(tree,100);
-        tree.printTree2(tree.root, "", true);
-        boradorNodos(tree,100);
+        capacidadesComedoresAVL tree = new capacidadesComedoresAVL();        
+        //long startTime = System.nanoTime();
+        //generadorNodos(tree,10000000);
+        //long endTime = System.nanoTime();
+        //tree.printTree2(tree.root, "", true);
+        //System.out.println("Duracion insertar: " + (endTime-startTime)/1e6 + " ms");
+        
+        //startTime = System.nanoTime();
+        //boradorNodos(tree,100);
+        //endTime = System.nanoTime();
+        //System.out.println("Duracion borrar: " + (endTime-startTime)/1e6 + " ms");
         
         
+        //startTime = System.nanoTime();
+        //boradorNodos(tree,10000000);
+        //endTime = System.nanoTime();
+        //System.out.println("Duracion buscar: " + (endTime-startTime)/1e6 + " ms");
+
     }
     
     public static void generadorNodos(capacidadesComedoresAVL  a, int tamanio){
         for (int i =0; i < tamanio; i++){
-          a.root = a.root = a.insertNode("Prueba"+i, a.root, i);
+          a.root = a.insertNode("Prueba"+i, a.root, i);
         }
     }
     
     public static void boradorNodos(capacidadesComedoresAVL  a, int tamanio){
         for (int i =0; i < tamanio; i++){
-          a.root = a.root = a.deleteNode( a.root, i);
+          a.root = a.deleteNode( a.root, i);
+        }
+    }
+    
+    public static void buscadorNodos(capacidadesComedoresAVL  a, int tamanio){
+        for (int i =0; i < tamanio; i++){
+          a.root = a.searchNode( a.root, i);
         }
     }
 }
