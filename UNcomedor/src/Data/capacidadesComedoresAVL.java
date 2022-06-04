@@ -219,22 +219,22 @@ public class capacidadesComedoresAVL {
 
     public static void main(String[] args) {
         capacidadesComedoresAVL tree = new capacidadesComedoresAVL();        
-        //long startTime = System.nanoTime();
-        //generadorNodos(tree,10000000);
-        //long endTime = System.nanoTime();
-        //tree.printTree2(tree.root, "", true);
-        //System.out.println("Duracion insertar: " + (endTime-startTime)/1e6 + " ms");
+        long startTime = System.nanoTime();
+        generadorNodos(tree,100);
+        long endTime = System.nanoTime();
+        tree.printTree2(tree.root, "", true);
+        System.out.println("Duracion insertar: " + (endTime-startTime)/1e6 + " ms");
+              
         
-        //startTime = System.nanoTime();
-        //boradorNodos(tree,100);
-        //endTime = System.nanoTime();
-        //System.out.println("Duracion borrar: " + (endTime-startTime)/1e6 + " ms");
+        startTime = System.nanoTime();
+        boradorNodos(tree,10);
+        endTime = System.nanoTime();
+        System.out.println("Duracion buscar: " + (endTime-startTime)/1e6 + " ms");
         
-        
-        //startTime = System.nanoTime();
-        //boradorNodos(tree,10000000);
-        //endTime = System.nanoTime();
-        //System.out.println("Duracion buscar: " + (endTime-startTime)/1e6 + " ms");
+        startTime = System.nanoTime();
+        boradorNodos(tree,100);
+        endTime = System.nanoTime();
+        System.out.println("Duracion borrar: " + (endTime-startTime)/1e6 + " ms");
 
     }
     
@@ -246,13 +246,14 @@ public class capacidadesComedoresAVL {
     
     public static void boradorNodos(capacidadesComedoresAVL  a, int tamanio){
         for (int i =0; i < tamanio; i++){
-          a.root = a.deleteNode( a.root, i);
+          a.deleteNode( a.root, i);
         }
     }
     
     public static void buscadorNodos(capacidadesComedoresAVL  a, int tamanio){
         for (int i =0; i < tamanio; i++){
-          a.root = a.searchNode( a.root, i);
+          Node node = a.searchNode( a.root, i);
+          System.out.println("Arbol buscado "+node.nombreComedor);
         }
     }
 }
