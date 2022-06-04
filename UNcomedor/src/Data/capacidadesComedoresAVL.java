@@ -227,7 +227,7 @@ public class capacidadesComedoresAVL {
               
         
         startTime = System.nanoTime();
-        boradorNodos(tree,10);
+        buscadorNodos(tree,10);
         endTime = System.nanoTime();
         System.out.println("Duracion buscar: " + (endTime-startTime)/1e6 + " ms");
         
@@ -253,7 +253,7 @@ public class capacidadesComedoresAVL {
     public static void buscadorNodos(capacidadesComedoresAVL  a, int tamanio){
         for (int i =0; i < tamanio; i++){
           Node node = a.searchNode( a.root, i);
-          System.out.println("Arbol buscado "+node.nombreComedor);
+          System.out.println("Arbol buscado: "+node.nombreComedor);
         }
     }
 }
