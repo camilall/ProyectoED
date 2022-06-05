@@ -3,6 +3,13 @@ package Data;
 import java.util.Scanner;
 public class App {
     
+    static ListaUsuarios listaUsuarios = new ListaUsuarios();
+    static Pila pilaUsuarios = new Pila();
+    static Cola colaUsuarios = new Cola();
+    static ListaEnlazada listasincola = new ListaEnlazada();
+    static Array arrayUsuarios = new Array();
+    static Usuario[] array = new Usuario[10000000];
+    static PriorityQueueClass pq = new PriorityQueueClass(array);
     static Scanner scanner= new Scanner(System.in);
     static Cola colacomedor1 = new Cola();
     static Cola colacomedor2 = new Cola();
@@ -17,7 +24,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         int opcion=0;
         do{
-            System.out.println("Escoja una opcion: \n 1. Entrar como administrador\n 2. Crear usuarios\n 3. Buscar usuario\n 4. Pedir turno\n 5. Pruebas\n 6. Salir");
+            System.out.println("Escoja una opcion: \n 1. Entrar como administrador\n 2. Crear usuarios\n 3. Buscar usuario\n 4. Pedir turno\n 5. Pruebas\n 6. Pruebas cp \n 7. Salir");
 
             opcion = scanner.nextInt();
             switch(opcion){
@@ -41,7 +48,28 @@ public class App {
                 case 4:
                     break;
                 case 5:
-                    CrearUsuarios();
+                    System.out.println("Con que estructura desea crear los usuarios:\n1. Listas enlazadas\n2. Pilas con referencias\n3. Colas con referencias\n4. Arreglos dinamicos\n5. Lista enlazada sin cola");
+                    opcion2 = scanner.nextInt();
+                    CrearUsuarios(opcion2);
+                    break;
+                case 6:
+                    crearUsuariosCP();
+                    System.out.println("Que desea hacer con la cola de prioridades\n1. eliminar\n2. Organizar la cola de prioridades")  ;
+                    opcion2 = scanner.nextInt();
+                    if(opcion2==1){
+                        opcion2 = scanner.nextInt();
+                        long Ti = System.currentTimeMillis(); 
+                        pq.remove(opcion2);
+                        
+                        long Tf = System.currentTimeMillis(); 
+                        System.out.println("Tiempo de eliminacion: " + (Tf-Ti));
+                    }else{
+                        long Ti = System.currentTimeMillis(); 
+                        pq.sort();
+                        
+                        long Tf = System.currentTimeMillis(); 
+                        System.out.println("Tiempo de eliminacion: " + (Tf-Ti));
+                    }
 
 
             }        
@@ -114,5 +142,56 @@ public class App {
 
       
     }
+    public static void crearUsuariosCP(){
+        System.out.println("Para ingresar los datos del nuevo usuario, utilice el siguiente formato: Nombre,id, apoyo, usuario");
+        System.out.println("Ingrese los datos del usuario utlizando las comas:");
+       int x=0;
+        File archivo;
+        FileReader fr;
+        BufferedReader br;
+        try {
+            archivo = new File("/Users/nataliaquiroga/Desktop/Proyecto estructuras/ProyectoED/UNcomedor/data/Prueba1M.txt");
+            fr = new FileReader(archivo);
+            br = new BufferedReader(fr);
+            String line;
+            long Tinicio = System.currentTimeMillis();
+            while ((line=br.readLine()) != null){
+                x++;
+                String[] dataUser= line.split(",");
+                String nombre =dataUser[1];
+                String id = dataUser[0].replace(" ","");;
+                String apoyo = dataUser[4];
+                String usuario = dataUser[3];
+                String comedor = dataUser[5];
+                int opcion = Integer.valueOf(comedor);
+                Usuario user;
+                if(opcion==1){
+                    Comedor comedor_us1 = central;
+                    user= new Usuario(nombre, id, apoyo, usuario, comedor_us1);
+                }else if(opcion==2){
+                    Comedor comedor_us2 = economia;
+                    user = new Usuario(nombre, id, apoyo, usuario, comedor_us2);
+                }else if(opcion==3){
+                    Comedor comedor_us3 = yu_takeuchi;
+                    user = new Usuario(nombre, id, apoyo, usuario, comedor_us3);
+                }else{
+                    Comedor comedor_us4 = agrarias;
+                    user = new Usuario(nombre, id, apoyo, usuario, comedor_us4);
+                }
+                pq.insert(user);
+            } 
+            long Tfinal = System.currentTimeMillis(); 
+            System.out.print("Priority Queue = ");
+            
+            System.out.println("Tiempo de ejecucuion: "+ (Tfinal-Tinicio));
+            //pq.print();
+            Tfinal = System.currentTimeMillis();
+            System.out.println("Tiempo de ejecucuion: "+ (Tfinal-Tinicio));
+        } catch (Exception e) {
+            System.out.println("Error: "+x+e.getMessage());
+        }
+    
+        
+        }
     
 }
